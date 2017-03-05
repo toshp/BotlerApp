@@ -1,8 +1,11 @@
 package com.heybotler.botlerapp;
 
-import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.util.HashMap;
 
 /**
  * Created by toshitpanigrahi on 3/4/17.
@@ -11,19 +14,60 @@ import java.net.URLEncoder;
  */
 
 public class UserManagement {
-    public static boolean validateUser(String email, String password, TextView v) {
+    public static String getUserInfo(String email, String password) {
         // Make a separate class to handle post requests
         StringBuilder params = new StringBuilder("email=");
         try {
             params.append(URLEncoder.encode(email, "UTF-8"));
             params.append("&password=");
+            // Hash password before sending. Not for production.
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            password = bytesToHexString(hash);
             params.append(URLEncoder.encode(password, "UTF-8"));
 
-            String response = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
-            v.setText(response);
+            String json = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
+
+            return json;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static boolean validateJSON(String str) {
+        try {
+            JSONObject json = new JSONObject(str);
+            String validity = json.getString("valid");
+            return validity.equals("true");
+        } catch (JSONException e) {
             return false;
         }
-        return true;
+    }
+
+    public static HashMap<String, String> getUserMap(String str) {
+        try {
+            HashMap<String, String> map = new HashMap<String, String>();
+            JSONObject json = new JSONObject(str);
+            map.put("firstName", json.getString("first_name"));
+            map.put("lastName", json.getString("last_name"));
+            map.put("userID", json.getString("user_id"));
+            map.put("email", json.getString("email"));
+            return map;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Helper function for hash.
+    private static String bytesToHexString(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(0xFF & bytes[i]);
+            if (hex.length() == 1) {
+                sb.append('0');
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
     }
 }

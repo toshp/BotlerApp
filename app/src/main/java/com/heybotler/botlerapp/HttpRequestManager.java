@@ -12,8 +12,6 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class HttpRequestManager {
-    private String response;
-
     private class GetRequestor extends AsyncTask<String, Void, String> {
         @Override
         public String doInBackground(String... url) {
@@ -23,7 +21,7 @@ public class HttpRequestManager {
 
                 con.setRequestMethod("GET");
 
-                System.out.println("\nSending request to URL : " + url);
+                System.out.println("\nSending request to URL : " + url[0]);
                 System.out.println("Response Code : " + con.getResponseCode());
                 System.out.println("Response Message : " + con.getResponseMessage());
 
@@ -40,14 +38,11 @@ public class HttpRequestManager {
 
                 return response.toString();
             } catch (java.io.IOException e) {
+                System.out.println("HERE: " + e);
                 return null;
             }
         }
 
-        @Override
-        public void onPostExecute(String result) {
-            response = result;
-        }
     }
     /*
     public static String postWithResponse(String url, String params) throws java.io.IOException {
@@ -88,7 +83,12 @@ public class HttpRequestManager {
 
     public static String getWithResponse(String url) {
         HttpRequestManager hrm = new HttpRequestManager();
-        hrm.new GetRequestor().execute(url);
-        return hrm.response;
+        try {
+            String r = hrm.new GetRequestor().execute(url).get();
+            return r;
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+            return null;
+        }
     }
 }
