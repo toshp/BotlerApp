@@ -9,7 +9,6 @@ import java.net.URLEncoder;
  */
 
 public class UserManagement {
-
     public static boolean validateUser(String email, String password) {
         // Make a separate class to handle post requests
         StringBuilder params = new StringBuilder("email=");
@@ -18,7 +17,7 @@ public class UserManagement {
             params.append("&password=");
             params.append(URLEncoder.encode(password, "UTF-8"));
 
-            String response = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
+            new HttpGetRequest().execute("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
         } catch (Exception e) {
             return false;
         }
