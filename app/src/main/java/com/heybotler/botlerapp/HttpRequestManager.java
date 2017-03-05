@@ -46,4 +46,32 @@ public class HttpRequestManager {
             con.disconnect();
         }
     }
+
+    public static String getWithResponse(String url) throws java.io.IOException {
+        URL endpoint = new URL(url);
+        HttpsURLConnection con = (HttpsURLConnection) endpoint.openConnection();
+
+        try {
+            con.setRequestMethod("GET");
+
+            System.out.println("\nSending request to URL : " + url);
+            System.out.println("Response Code : " + con.getResponseCode());
+            System.out.println("Response Message : " + con.getResponseMessage());
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            in.close();
+            return response.toString();
+        } catch (java.io.IOException e) {
+            return null;
+        } finally {
+            con.disconnect();
+        }
+    }
 }

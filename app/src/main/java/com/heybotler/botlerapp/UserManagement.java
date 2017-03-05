@@ -18,7 +18,7 @@ public class UserManagement {
             params.append("&password=");
             params.append(URLEncoder.encode(password, "UTF-8"));
 
-            String response = HttpRequestManager.postWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php", params.toString());
+            String response = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
         } catch (Exception e) {
             return false;
         }
