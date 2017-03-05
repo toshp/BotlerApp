@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity {
 
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
-        boolean isValid = UserManagement.validateUser(email, password);
+        boolean isValid = UserManagement.validateUser(email, password, (TextView) findViewById(R.id.login_title));
         if (isValid) {
             TextView tv = (TextView) findViewById(R.id.login_title);
             tv.setText("Success!");

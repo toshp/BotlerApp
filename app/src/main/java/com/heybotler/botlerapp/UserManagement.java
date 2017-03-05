@@ -1,5 +1,7 @@
 package com.heybotler.botlerapp;
 
+import android.widget.TextView;
+
 import java.net.URLEncoder;
 
 /**
@@ -9,7 +11,7 @@ import java.net.URLEncoder;
  */
 
 public class UserManagement {
-    public static boolean validateUser(String email, String password) {
+    public static boolean validateUser(String email, String password, TextView v) {
         // Make a separate class to handle post requests
         StringBuilder params = new StringBuilder("email=");
         try {
@@ -17,7 +19,8 @@ public class UserManagement {
             params.append("&password=");
             params.append(URLEncoder.encode(password, "UTF-8"));
 
-            new HttpGetRequest().execute("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
+            String response = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_authenticate.php?" + params.toString());
+            v.setText(response);
         } catch (Exception e) {
             return false;
         }
