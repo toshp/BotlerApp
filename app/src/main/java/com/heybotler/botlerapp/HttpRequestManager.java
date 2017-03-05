@@ -1,8 +1,9 @@
 package com.heybotler.botlerapp;
 
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
@@ -11,6 +12,44 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class HttpRequestManager {
+    private String response;
+
+    private class GetRequestor extends AsyncTask<String, Void, String> {
+        @Override
+        public String doInBackground(String... url) {
+            try {
+                URL endpoint = new URL(url[0]);
+                HttpsURLConnection con = (HttpsURLConnection) endpoint.openConnection();
+
+                con.setRequestMethod("GET");
+
+                System.out.println("\nSending request to URL : " + url);
+                System.out.println("Response Code : " + con.getResponseCode());
+                System.out.println("Response Message : " + con.getResponseMessage());
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
+                con.disconnect();
+
+                return response.toString();
+            } catch (java.io.IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        public void onPostExecute(String result) {
+            response = result;
+        }
+    }
+    /*
     public static String postWithResponse(String url, String params) throws java.io.IOException {
         URL endpoint = new URL(url);
         HttpsURLConnection con = (HttpsURLConnection) endpoint.openConnection();
@@ -45,33 +84,11 @@ public class HttpRequestManager {
         } finally {
             con.disconnect();
         }
-    }
+    } */
 
-    public static String getWithResponse(String url) throws java.io.IOException {
-        URL endpoint = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) endpoint.openConnection();
-
-        try {
-            con.setRequestMethod("GET");
-
-            System.out.println("\nSending request to URL : " + url);
-            System.out.println("Response Code : " + con.getResponseCode());
-            System.out.println("Response Message : " + con.getResponseMessage());
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            in.close();
-            return response.toString();
-        } catch (java.io.IOException e) {
-            return null;
-        } finally {
-            con.disconnect();
-        }
+    public static String getWithResponse(String url) {
+        HttpRequestManager hrm = new HttpRequestManager();
+        hrm.new GetRequestor().execute(url);
+        return hrm.response;
     }
 }
