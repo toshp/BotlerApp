@@ -1,5 +1,6 @@
 package com.heybotler.botlerapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,6 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_in);
 
         TextView tv = (TextView) findViewById(R.id.login_title);
@@ -57,6 +57,14 @@ public class SignInActivity extends AppCompatActivity {
             SharedPreferences userInfo = this.getPreferences(this.MODE_PRIVATE);
             SharedPreferences.Editor editor = userInfo.edit();
 
+            editor.putString(getString(R.string.first_name), userInfoMap.get("firstName"));
+            editor.putString(getString(R.string.last_name), userInfoMap.get("lastName"));
+            editor.putString(getString(R.string.email), userInfoMap.get("email"));
+            editor.putString(getString(R.string.user_id), userInfoMap.get("userID"));
+            editor.commit();
+
+            Intent next = new Intent(this, ChatActivity.class);
+            startActivity(next);
         } else {
             // Wrong credentials
             TextView tv = (TextView) findViewById(R.id.login_title_text);
