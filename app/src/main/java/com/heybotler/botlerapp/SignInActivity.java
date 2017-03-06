@@ -48,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
             System.out.println("WOOHOO passed");
             HashMap<String, String> userInfoMap = UserManagement.getUserMap(json);
 
-            // Wrong credentials
+            // Correct credentials
             TextView tv = (TextView) findViewById(R.id.login_title);
             tv.setText("Hi, " + userInfoMap.get("firstName") + ".");
 
