@@ -1,5 +1,6 @@
 package com.heybotler.botlerapp;
 
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,27 +38,29 @@ public class SignInActivity extends AppCompatActivity {
         if (json == null) {
             // Error handling, exception happened
             TextView tv = (TextView) findViewById(R.id.login_title_text);
-            tv.setText("Whoops! Something went wrong. Please make sure you are connected" +
-                    "to the Internet.");
+            tv.setText(getString(R.string.login_internet_error));
             return;
         }
 
         boolean isValid = UserManagement.validateJSON(json);
 
         if (isValid) {
-            System.out.println("WOOHOO passed");
             HashMap<String, String> userInfoMap = UserManagement.getUserMap(json);
 
             // Correct credentials
             TextView tv = (TextView) findViewById(R.id.login_title);
-            tv.setText("Hi, " + userInfoMap.get("firstName") + ".");
+            tv.setText(getString(R.string.login_success_title) + userInfoMap.get("firstName") + ".");
 
             tv = (TextView) findViewById(R.id.login_title_text);
-            tv.setText("Please give us a moment to set things up.");
+            tv.setText(getString(R.string.login_success_text));
+
+            SharedPreferences userInfo = this.getPreferences(this.MODE_PRIVATE);
+            SharedPreferences.Editor editor = userInfo.edit();
+
         } else {
             // Wrong credentials
             TextView tv = (TextView) findViewById(R.id.login_title_text);
-            tv.setText("Wrong username and password. Please try again.");
+            tv.setText(getString(R.string.login_failure_text));
             return;
         }
     }

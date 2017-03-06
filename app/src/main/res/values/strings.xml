@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Botler App</string>
+    <string name="first_name">firstName</string>
+    <string name="last_name">lastName</string>
+    <string name="email">email</string>
+    <string name="user_id">userID</string>
+
+    <string name="login_title">Welcome back!</string>
+    <string name="login_text">Sign in to your Botler account.</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="button_signin">SIGN IN</string>
+
+    <string name="login_internet_error">Whoops! Something went wrong. Please make sure you are connected to the Internet.</string>
+    <string name="login_success_text">Please give us a moment to set things up.</string>
+    <string name="login_success_title">Hi, </string>
+    <string name="login_failure_text">Wrong username and password. Please try again.</string>
 </resources>

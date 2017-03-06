@@ -34,7 +34,7 @@
         android:id="@+id/login_text_area">
 
         <TextView
-            android:text="Welcome back!"
+            android:text="@string/login_title"
             android:textSize="33sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
-            android:text="Sign in to your Botler account."
+            android:text="@string/login_text"
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_marginBottom="10dp"
                 android:inputType="textEmailAddress"
                 android:id="@+id/login_email"
-                android:hint="Email"/>
+                android:hint="@string/hint_email"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +90,7 @@
                 android:textSize="16sp"
                 android:inputType="textPassword"
                 android:id="@+id/login_password"
-                android:hint="Password"/>
+                android:hint="@string/hint_password"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -101,7 +101,7 @@
             android:textColor="@color/botlerBlue"
             android:background="@drawable/login_button"
             android:letterSpacing="0.15"
-            android:text="SIGN IN"
+            android:text="@string/button_signin"
             android:onClick="authenticate"/>
     </LinearLayout>
 
