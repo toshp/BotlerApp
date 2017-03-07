@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.heybotler.botlerapp.R;
@@ -24,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
+    private MessageAdapter messageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class ChatActivity extends AppCompatActivity {
         // Get messages in ArrayList
         ArrayList<Message> messages = UserManagement.getUserMessages(userID);
         // Instantiate adapter
-        MessageAdapter messageAdapter = new MessageAdapter(getApplicationContext(), messages);
+        messageAdapter = new MessageAdapter(getApplicationContext(), messages);
         // Bind to ListView
         ListView messageList = (ListView) findViewById(R.id.chat_history);
         messageList.setAdapter(messageAdapter);
@@ -106,5 +108,11 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sendMessage(View v) {
+        EditText newMessage = (EditText) findViewById(R.id.message_entry);
+        String messageText = newMessage.getText().toString();
+        messageAdapter.add(new Message(messageText, "11:02 PM", "Yo", "http://google.com"));
     }
 }
