@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NavTheme" parent="AppTheme">
+        <item name="android:background">#444444</item>
+    </style>
+
 </resources>

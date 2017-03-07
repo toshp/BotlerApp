@@ -1,19 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_chat"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
-    tools:context="com.heybotler.botlerapp.ChatActivity">
+    tools:context="com.heybotler.botlerapp.activities.ChatActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/chat_toolbar"
+    <RelativeLayout
+        android:id="@+id/activity_chat"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/botlerBlue"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:padding="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/chat_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/botlerBlue"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <ListView
+            android:id="@+id/chat_history"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_bar"
+            android:layout_below="@id/chat_toolbar">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/botlerWhite"
+            android:id="@id/bottom_bar"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                android:textSize="16sp"
+                android:layout_marginRight="10dp"
+                android:textColor="#444444"
+                android:inputType="textPersonName"
+                android:textColorHint="#888888"
+                android:hint="Message"/>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="SEND" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Side navigation drawer UI -->
+    <ListView
+        android:id="@+id/nav_list"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|start"
+        android:theme="@style/NavTheme" />
+</android.support.v4.widget.DrawerLayout>

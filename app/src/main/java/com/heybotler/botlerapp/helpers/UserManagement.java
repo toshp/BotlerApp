@@ -1,10 +1,13 @@
-package com.heybotler.botlerapp;
+package com.heybotler.botlerapp.helpers;
+
+import com.heybotler.botlerapp.models.Message;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -32,6 +35,16 @@ public class UserManagement {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    // Stub for now
+    public static ArrayList<Message> getUserMessages(String userID) {
+        ArrayList<Message> messages = new ArrayList<Message>();
+        Message m1 = new Message("Hello world!", "10:00 AM", "You", "https://heybotler.com/images/user_icon.png");
+        Message m2 = new Message("Hi again", "10:05 AM", "You", "https://heybotler.com/images/user_icon.png");
+        messages.add(m1);
+        messages.add(m2);
+        return messages;
     }
 
     public static boolean validateJSON(String str) {

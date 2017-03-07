@@ -1,4 +1,4 @@
-package com.heybotler.botlerapp;
+package com.heybotler.botlerapp.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.heybotler.botlerapp.helpers.FontChanger;
+import com.heybotler.botlerapp.R;
+import com.heybotler.botlerapp.helpers.UserManagement;
 
 import java.util.HashMap;
 
