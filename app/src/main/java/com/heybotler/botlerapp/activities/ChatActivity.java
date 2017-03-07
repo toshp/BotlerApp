@@ -29,6 +29,7 @@ public class ChatActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
     private MessageAdapter messageAdapter;
+    private SharedPreferences userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +50,13 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         setupDrawer();
-
+        userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
     }
 
     // Every time activity resumes get messages
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
         String userID = userInfo.getString(getResources().getString(R.string.user_id), "whoops");
         System.out.println("ONRESUME UID: " + userID);
         // Get messages in ArrayList
@@ -127,6 +127,10 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         EditText newMessage = (EditText) findViewById(R.id.message_entry);
         String messageText = newMessage.getText().toString();
-        messageAdapter.add(new Message(messageText, "11:02 PM", "Yo", "http://google.com"));
+        messageAdapter.add(new Message(messageText, "11:02 PM", "You", "https://heybotler.com/images/user-icon.png"));
+
+        messageAdapter.add(UserManagement.getMessageResponse(
+                userInfo.getString(getResources().getString(R.string.email), "whoops"),
+                messageText));
     }
 }

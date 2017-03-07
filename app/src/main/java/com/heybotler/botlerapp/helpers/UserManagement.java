@@ -38,7 +38,6 @@ public class UserManagement {
         }
     }
 
-    // Stub for now
     public static ArrayList<Message> getUserMessages(String userID) {
         ArrayList<Message> messages = new ArrayList<Message>();
         StringBuilder params = new StringBuilder("user_id=");
@@ -61,6 +60,31 @@ public class UserManagement {
             return messages;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public static Message getMessageResponse(String email, String text) {
+        StringBuilder params = new StringBuilder("key=");
+        try {
+            params.append(URLEncoder.encode("7e94eb7de155900e30824ce27165e99f", "UTF-8"));
+            params.append("&message=");
+            params.append(URLEncoder.encode(text, "UTF-8"));
+            params.append("&identity_type=email&identifier=");
+            params.append(URLEncoder.encode(email, "UTF-8"));
+
+            String json = HttpRequestManager.getWithResponse("https://heybotler.com/listener/?" + params.toString());
+
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject botDetails = jsonObject.getJSONObject("bot_details");
+
+            String response = jsonObject.getString("response_string");
+            String timestamp = jsonObject.getString("timestamp");
+            String botName = botDetails.getString("bot_name");
+            String botIcon = "https://heybotler.com/" + botDetails.getString("bot_icon");
+
+            return new Message(response, timestamp, botName, botIcon);
+        } catch (Exception e) {
+            return new Message("Whoops, there was an error sending your message.", "10:00AM", "Error", "https://heybotler.com/images/build-icon.png");
         }
     }
 
