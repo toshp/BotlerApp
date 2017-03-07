@@ -8,6 +8,7 @@
     android:divider="@color/botlerWhite">
 
     <ImageView
+        android:id="@+id/sender_icon"
         android:contentDescription="Sender Image"
         android:layout_width="62dp"
         android:layout_height="62dp"
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="This is the body of a message"
-            android:textSize="16dp"
+            android:textSize="15dp"
             android:textColor="#222222"/>
     </LinearLayout>
 

@@ -6,13 +6,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.heybotler.botlerapp.R;
+import com.heybotler.botlerapp.helpers.FontChanger;
 import com.heybotler.botlerapp.helpers.MessageAdapter;
 import com.heybotler.botlerapp.helpers.UserManagement;
 import com.heybotler.botlerapp.models.Message;
@@ -53,14 +56,25 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences userInfo = this.getPreferences(this.MODE_PRIVATE);
-        String userID = userInfo.getString(getResources().getString(R.string.user_id), "0");
+        SharedPreferences userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
+        String userID = userInfo.getString(getResources().getString(R.string.user_id), "whoops");
+        System.out.println("ONRESUME UID: " + userID);
         // Get messages in ArrayList
         ArrayList<Message> messages = UserManagement.getUserMessages(userID);
         // Instantiate adapter
         messageAdapter = new MessageAdapter(getApplicationContext(), messages);
-        // Bind to ListView
+
         ListView messageList = (ListView) findViewById(R.id.chat_history);
+        View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
+
+        // Change font of chat header
+        TextView headTitle = (TextView) chatHeader.findViewById(R.id.chat_day);
+        FontChanger.changeFont(getAssets(), headTitle, "bold");
+        headTitle = (TextView) chatHeader.findViewById(R.id.chat_date);
+        FontChanger.changeFont(getAssets(), headTitle, "regular");
+        messageList.addHeaderView(chatHeader);
+
+        // Bind to ListView
         messageList.setAdapter(messageAdapter);
     }
 

@@ -31,7 +31,9 @@
             android:layout_above="@+id/bottom_bar"
             android:layout_below="@id/chat_toolbar"
             android:background="#dddddd"
-            android:divider="@color/botlerWhite">
+            android:divider="@color/botlerWhite"
+            android:transcriptMode="alwaysScroll"
+            android:stackFromBottom="true">
 
         </ListView>
 

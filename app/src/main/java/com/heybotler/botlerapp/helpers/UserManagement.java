@@ -2,6 +2,7 @@ package com.heybotler.botlerapp.helpers;
 
 import com.heybotler.botlerapp.models.Message;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,11 +41,27 @@ public class UserManagement {
     // Stub for now
     public static ArrayList<Message> getUserMessages(String userID) {
         ArrayList<Message> messages = new ArrayList<Message>();
-        Message m1 = new Message("Hello world!", "10:00 AM", "You", "https://heybotler.com/images/user_icon.png");
-        Message m2 = new Message("Hi again", "10:05 AM", "You", "https://heybotler.com/images/user_icon.png");
-        messages.add(m1);
-        messages.add(m2);
-        return messages;
+        StringBuilder params = new StringBuilder("user_id=");
+        try {
+            params.append(URLEncoder.encode(userID, "UTF-8"));
+            String jsonMessages = HttpRequestManager.getWithResponse("https://heybotler.com/php/user_mgmt/json_messages.php?" + params.toString());
+            // Now make json object
+            JSONObject jsonObject = new JSONObject(jsonMessages);
+            // Get the Json array
+            JSONArray jsonArray = jsonObject.getJSONArray("messages");
+            // Traverse and instantiate Messages
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String sender = jsonArray.getJSONObject(i).getString("sender");
+                String time = jsonArray.getJSONObject(i).getString("time");
+                String icon = jsonArray.getJSONObject(i).getString("icon");
+                String text = jsonArray.getJSONObject(i).getString("text");
+                Message m = new Message(text, time, sender, icon);
+                messages.add(m);
+            }
+            return messages;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static boolean validateJSON(String str) {

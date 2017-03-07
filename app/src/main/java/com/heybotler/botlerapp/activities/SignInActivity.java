@@ -58,7 +58,7 @@ public class SignInActivity extends AppCompatActivity {
             tv = (TextView) findViewById(R.id.login_title_text);
             tv.setText(getString(R.string.login_success_text));
 
-            SharedPreferences userInfo = this.getPreferences(this.MODE_PRIVATE);
+            SharedPreferences userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
             SharedPreferences.Editor editor = userInfo.edit();
 
             editor.putString(getString(R.string.first_name), userInfoMap.get("firstName"));
@@ -66,6 +66,8 @@ public class SignInActivity extends AppCompatActivity {
             editor.putString(getString(R.string.email), userInfoMap.get("email"));
             editor.putString(getString(R.string.user_id), userInfoMap.get("userID"));
             editor.commit();
+
+            System.out.println("SIA UID: " + userInfo.getString("userID", "noooo"));
 
             Intent next = new Intent(this, ChatActivity.class);
             startActivity(next);
