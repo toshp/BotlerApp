@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Created by toshitpanigrahi on 3/6/17.
+ * Adapter binds message list to format xml
  */
 
 public class MessageAdapter extends ArrayAdapter<Message> {
@@ -34,9 +35,11 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         // Populate fields
         TextView senderText = (TextView) convertView.findViewById(R.id.message_sender);
         TextView messageText = (TextView) convertView.findViewById(R.id.message_text);
+        TextView messageTime = (TextView) convertView.findViewById(R.id.message_time);
 
         senderText.setText(m.getSender());
         messageText.setText(m.getText());
+        messageTime.setText(m.getTime());
 
         AssetManager am = getContext().getAssets();
         FontChanger.changeFont(am, senderText, "bold");

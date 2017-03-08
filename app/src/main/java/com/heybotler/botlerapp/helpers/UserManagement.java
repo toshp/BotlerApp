@@ -18,6 +18,9 @@ import java.util.HashMap;
  */
 
 public class UserManagement {
+    // Hits API with credentials and gets the json response
+    // DOES NOT VERIFY CREDENTIALS
+    // TODO number of tries, format checking
     public static String getUserInfo(String email, String password) {
         // Make a separate class to handle post requests
         StringBuilder params = new StringBuilder("email=");
@@ -63,6 +66,7 @@ public class UserManagement {
         }
     }
 
+    // Makes outgoing message to Botler Listener API
     public static Message getMessageResponse(String email, String text) {
         StringBuilder params = new StringBuilder("key=");
         try {
@@ -88,6 +92,7 @@ public class UserManagement {
         }
     }
 
+    // Checks if credentials in JSON response was valid
     public static boolean validateJSON(String str) {
         try {
             JSONObject json = new JSONObject(str);

@@ -31,10 +31,17 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private SharedPreferences userInfo;
 
+    /**
+     * 1) Set app bar title
+     * 2) Set up drawer
+     * 3) Set up chat history date
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        // Top bar setup
         Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -45,7 +52,6 @@ public class ChatActivity extends AppCompatActivity {
         addDrawerItems();
 
         getSupportActionBar().setTitle("Today's Messages");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -77,8 +83,32 @@ public class ChatActivity extends AppCompatActivity {
         messageList.setAdapter(messageAdapter);
     }
 
+    /**
+     * Called from send click
+     * Outgoing Message enqueued in MessageAdapter
+     * Response retrieved and enqueued
+     * @param v
+     */
+    public void sendMessage(View v) {
+        EditText newMessage = (EditText) findViewById(R.id.message_entry);
+        String messageText = newMessage.getText().toString();
+        messageAdapter.add(
+                new Message(
+                        messageText,
+                        "11:02 PM",
+                        userInfo.getString(getResources().getString(R.string.first_name), null)
+                                + userInfo.getString(getResources().getString(R.string.last_name), null),
+                        "https://heybotler.com/images/user-icon.png"
+                )
+        );
+
+        messageAdapter.add(UserManagement.getMessageResponse(
+                userInfo.getString(getResources().getString(R.string.email), "whoops"),
+                messageText));
+    }
+
     private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
+        String[] osArray = { "Menu Item 1", "Menu Item 2", "Menu Item 3", "Menu Item 4", "Menu Item 5" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
@@ -110,34 +140,11 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
         // Activate the navigation drawer toggle
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void sendMessage(View v) {
-        EditText newMessage = (EditText) findViewById(R.id.message_entry);
-        String messageText = newMessage.getText().toString();
-        messageAdapter.add(
-                new Message(
-                        messageText,
-                        "11:02 PM",
-                        userInfo.getString(getResources().getString(R.string.first_name), null)
-                        + userInfo.getString(getResources().getString(R.string.last_name), null),
-                        "https://heybotler.com/images/user-icon.png"
-                )
-        );
-
-        messageAdapter.add(UserManagement.getMessageResponse(
-                userInfo.getString(getResources().getString(R.string.email), "whoops"),
-                messageText));
     }
 }

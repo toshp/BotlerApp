@@ -16,7 +16,11 @@ import com.heybotler.botlerapp.helpers.UserManagement;
 import java.util.HashMap;
 
 public class SignInActivity extends AppCompatActivity {
-
+    /**
+     * Decide if user has already signed in,
+     * else show sign in page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,10 @@ public class SignInActivity extends AppCompatActivity {
         FontChanger.changeFont(am, tv, "regular");
     }
 
-    // Get email and password and make post request to botler
+    /**
+     * Called from sign in button.
+     * @param view
+     */
     public void authenticate(View view) {
         EditText et_email = (EditText) findViewById(R.id.login_email);
         EditText et_password = (EditText) findViewById(R.id.login_password);
@@ -60,6 +67,7 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
+        // Check if valid json object
         boolean isValid = UserManagement.validateJSON(json);
 
         if (isValid) {

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 /**
  * Created by toshitpanigrahi on 3/4/17.
+ * Change font of a TextView to Open Sans
  */
 
 public class FontChanger {

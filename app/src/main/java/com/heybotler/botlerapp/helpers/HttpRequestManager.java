@@ -9,6 +9,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by toshitpanigrahi on 3/5/17.
+ *
+ * Only the static method getWithResponse() should
+ * be called. It will make new HRM and will handle
+ * the request from the url
  */
 
 public class HttpRequestManager {
@@ -44,43 +48,12 @@ public class HttpRequestManager {
         }
 
     }
-    /*
-    public static String postWithResponse(String url, String params) throws java.io.IOException {
-        URL endpoint = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) endpoint.openConnection();
 
-        try {
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Accept-Language", "UTF-8");
-            con.setDoOutput(true);
-
-            OutputStreamWriter outWriter = new OutputStreamWriter(con.getOutputStream());
-            outWriter.write(params);
-            outWriter.flush();
-
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + params);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            System.out.println(response.toString());
-            return response.toString();
-        } catch (java.io.IOException e) {
-            return null;
-        } finally {
-            con.disconnect();
-        }
-    } */
-
+    /**
+     * Makes a get request to a given url
+     * @param url
+     * @return String response
+     */
     public static String getWithResponse(String url) {
         HttpRequestManager hrm = new HttpRequestManager();
         try {
