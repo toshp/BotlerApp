@@ -22,6 +22,20 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        SharedPreferences userInfo = getApplicationContext().getSharedPreferences(
+                getResources().getString(R.string.user_info_file), MODE_PRIVATE);
+
+        if (userInfo != null) {
+            // Check if user has signed in already
+            if (userInfo.getString(getResources().getString(R.string.user_id), null) != null) {
+                System.out.println("User already signed in");
+                // Next activity
+                Intent next = new Intent(this, ChatActivity.class);
+                startActivity(next);
+                return;
+            }
+        }
+
         TextView tv = (TextView) findViewById(R.id.login_title);
         AssetManager am = getApplicationContext().getAssets();
         FontChanger.changeFont(am, tv, "bold");

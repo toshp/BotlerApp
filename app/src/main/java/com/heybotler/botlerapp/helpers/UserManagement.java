@@ -84,7 +84,7 @@ public class UserManagement {
 
             return new Message(response, timestamp, botName, botIcon);
         } catch (Exception e) {
-            return new Message("Whoops, there was an error sending your message.", "10:00AM", "Error", "https://heybotler.com/images/build-icon.png");
+            return new Message("Whoops, there was an error sending your message.", "10:00 AM", "Error", "https://heybotler.com/images/build-icon.png");
         }
     }
 
