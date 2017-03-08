@@ -51,6 +51,16 @@ public class ChatActivity extends AppCompatActivity {
 
         setupDrawer();
         userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
+
+        ListView messageList = (ListView) findViewById(R.id.chat_history);
+        View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
+
+        // Change font of chat header
+        TextView headTitle = (TextView) chatHeader.findViewById(R.id.chat_day);
+        FontChanger.changeFont(getAssets(), headTitle, "bold");
+        headTitle = (TextView) chatHeader.findViewById(R.id.chat_date);
+        FontChanger.changeFont(getAssets(), headTitle, "regular");
+        messageList.addHeaderView(chatHeader);
     }
 
     // Every time activity resumes get messages
@@ -65,14 +75,6 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(getApplicationContext(), messages);
 
         ListView messageList = (ListView) findViewById(R.id.chat_history);
-        View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
-
-        // Change font of chat header
-        TextView headTitle = (TextView) chatHeader.findViewById(R.id.chat_day);
-        FontChanger.changeFont(getAssets(), headTitle, "bold");
-        headTitle = (TextView) chatHeader.findViewById(R.id.chat_date);
-        FontChanger.changeFont(getAssets(), headTitle, "regular");
-        messageList.addHeaderView(chatHeader);
 
         // Bind to ListView
         messageList.setAdapter(messageAdapter);
