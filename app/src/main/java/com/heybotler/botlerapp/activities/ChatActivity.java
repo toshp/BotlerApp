@@ -41,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
+
         // Top bar setup
         Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(myToolbar);
@@ -49,6 +51,12 @@ public class ChatActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActivityTitle = "Today's Messages";
 
+        View navHeader = LayoutInflater.from(this).inflate(R.layout.nav_heading, null);
+        TextView nav_name = (TextView) navHeader.findViewById(R.id.nav_name);
+        nav_name.setText(userInfo.getString("firstName", "No") + " " + userInfo.getString("lastName", "Name"));
+        FontChanger.changeFont(getAssets(), nav_name, "bold");
+        mDrawerList.addHeaderView(navHeader);
+
         addDrawerItems();
 
         getSupportActionBar().setTitle("Today's Messages");
@@ -56,7 +64,6 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         setupDrawer();
-        userInfo = this.getSharedPreferences(getResources().getString(R.string.user_info_file), this.MODE_PRIVATE);
 
         ListView messageList = (ListView) findViewById(R.id.chat_history);
         View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);

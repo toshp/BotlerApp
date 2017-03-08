@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:text="This is the body of a message"
             android:textSize="15sp"
+            android:autoLink="web"
             android:textColor="@color/bolterBlack"/>
     </LinearLayout>
 

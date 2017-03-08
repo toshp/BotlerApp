@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:gravity="center"
+    android:background="@color/botlerWhite">
+
+    <ImageView
+        android:contentDescription="Sender Image"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:paddingLeft="8dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/user_icon"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hi there,"
+            android:textSize="14sp"
+            android:textColor="@color/botlerGray"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toshit Panigrahi"
+            android:textSize="17sp"
+            android:id="@+id/nav_name"
+            android:textColor="@color/bolterBlack"/>
+    </LinearLayout>
+</LinearLayout>
