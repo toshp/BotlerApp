@@ -68,14 +68,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         String userID = userInfo.getString(getResources().getString(R.string.user_id), "whoops");
-        System.out.println("ONRESUME UID: " + userID);
         // Get messages in ArrayList
         ArrayList<Message> messages = UserManagement.getUserMessages(userID);
         // Instantiate adapter
         messageAdapter = new MessageAdapter(getApplicationContext(), messages);
-
         ListView messageList = (ListView) findViewById(R.id.chat_history);
-
         // Bind to ListView
         messageList.setAdapter(messageAdapter);
     }
@@ -129,7 +126,15 @@ public class ChatActivity extends AppCompatActivity {
     public void sendMessage(View v) {
         EditText newMessage = (EditText) findViewById(R.id.message_entry);
         String messageText = newMessage.getText().toString();
-        messageAdapter.add(new Message(messageText, "11:02 PM", "You", "https://heybotler.com/images/user-icon.png"));
+        messageAdapter.add(
+                new Message(
+                        messageText,
+                        "11:02 PM",
+                        userInfo.getString(getResources().getString(R.string.first_name), null)
+                        + userInfo.getString(getResources().getString(R.string.last_name), null),
+                        "https://heybotler.com/images/user-icon.png"
+                )
+        );
 
         messageAdapter.add(UserManagement.getMessageResponse(
                 userInfo.getString(getResources().getString(R.string.email), "whoops"),
