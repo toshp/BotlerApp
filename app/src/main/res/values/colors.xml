@@ -7,5 +7,6 @@
     <color name="botlerBlue">#3293d4</color>
     <color name="botlerGray">#888888</color>
     <color name="botlerLightGray">#bbbbbb</color>
-    <color name="bolterBlack">#222222</color>
+    <color name="botlerBlack">#222222</color>
+    <color name="botlerRed">#D43326</color>
 </resources>

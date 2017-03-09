@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -56,6 +57,8 @@ public class ChatActivity extends AppCompatActivity {
         nav_name.setText(userInfo.getString("firstName", "No") + " " + userInfo.getString("lastName", "Name"));
         FontChanger.changeFont(getAssets(), nav_name, "bold");
         mDrawerList.addHeaderView(navHeader);
+        View navSignOut = LayoutInflater.from(this).inflate(R.layout.nav_sign_out, null);
+        mDrawerList.addFooterView(navSignOut);
 
         addDrawerItems();
 
@@ -64,6 +67,8 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         setupDrawer();
+
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         ListView messageList = (ListView) findViewById(R.id.chat_history);
         View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
@@ -115,8 +120,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Menu Item 1", "Menu Item 2", "Menu Item 3", "Menu Item 4", "Menu Item 5" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] osArray = {"Today's Messages", "Themes", "Recent Bots"};
+        mAdapter = new ArrayAdapter<String>(this, R.layout.nav_opt_layout, R.id.nav_opt_text, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -153,5 +158,19 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 }

@@ -39,6 +39,6 @@
             android:text="Toshit Panigrahi"
             android:textSize="17sp"
             android:id="@+id/nav_name"
-            android:textColor="@color/bolterBlack"/>
+            android:textColor="@color/botlerBlack"/>
     </LinearLayout>
 </LinearLayout>
