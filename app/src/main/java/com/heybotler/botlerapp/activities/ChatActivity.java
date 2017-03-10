@@ -1,5 +1,6 @@
 package com.heybotler.botlerapp.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -167,10 +168,27 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /** Closes drawer, passes the selection to changeActivity */
     private void selectItem(int position) {
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+        changeActivity(position);
+    }
+
+    private void changeActivity(int position) {
+        if (position == 2) {
+            // Launch themes
+            Intent next = new Intent(this, SettingsActivity.class);
+            next.putExtra("screen", "theme");
+            startActivity(next);
+        } else if (position == 3) {
+            // Recent bots
+            Intent next = new Intent(this, SettingsActivity.class);
+            next.putExtra("screen", "history");
+            startActivity(next);
+        } else if (position == 4) {
+            // Sign out
+        }
     }
 }
