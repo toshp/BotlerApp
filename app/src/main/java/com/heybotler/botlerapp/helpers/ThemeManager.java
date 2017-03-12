@@ -11,7 +11,20 @@ import com.heybotler.botlerapp.R;
 
 public class ThemeManager {
     public enum Theme {
-        BLUE, GRAY, SUIT, RED
+        BLUE, GRAY, SUIT, RED;
+
+        public static Theme getThemeFromString(String t) {
+            switch (t) {
+                case "gray":
+                    return Theme.GRAY;
+                case "red":
+                    return Theme.RED;
+                case "suit":
+                    return Theme.SUIT;
+            }
+            // default
+            return Theme.BLUE;
+        }
     }
 
     private AppCompatActivity activity;
@@ -28,15 +41,6 @@ public class ThemeManager {
 
     public Theme getCurrentTheme() {
         String t = userInfo.getString(activity.getString(R.string.user_theme), "blue");
-        switch (t) {
-            case "gray":
-                return Theme.GRAY;
-            case "red":
-                return Theme.RED;
-            case "suit":
-                return Theme.SUIT;
-        }
-        // default
-        return Theme.BLUE;
+        return Theme.getThemeFromString(t);
     }
 }

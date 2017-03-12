@@ -81,23 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveUserTheme(String theme) {
-        //SharedPreferences.Editor editor = userInfo.edit();
-        //editor.putString(getResources().getString(R.string.user_theme), theme);
-        //editor.commit();
-        switch (theme) {
-            case "blue":
-                themeManager.saveTheme(ThemeManager.Theme.BLUE);
-                break;
-            case "suit":
-                themeManager.saveTheme(ThemeManager.Theme.SUIT);
-                break;
-            case "red":
-                themeManager.saveTheme(ThemeManager.Theme.RED);
-                break;
-            case "gray":
-                themeManager.saveTheme(ThemeManager.Theme.GRAY);
-                break;
-        }
+        themeManager.saveTheme(ThemeManager.Theme.getThemeFromString(theme));
     }
 
 
