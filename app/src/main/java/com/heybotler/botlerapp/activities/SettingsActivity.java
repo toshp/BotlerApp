@@ -13,11 +13,14 @@ import android.view.View;
 import com.heybotler.botlerapp.R;
 import com.heybotler.botlerapp.fragments.ThemeFragment;
 import com.heybotler.botlerapp.helpers.NavDrawerSetup;
+import com.heybotler.botlerapp.helpers.ThemeManager;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences userInfo;
     private String mActivityTitle = "Theme Settings";
     private NavDrawerSetup nds;
+    private ThemeManager themeManager;
+    private ThemeManager.Theme currentTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,10 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(mActivityTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        // Setup theme manager
+        themeManager = new ThemeManager(this);
+        currentTheme = themeManager.getCurrentTheme();
 
         // Setup drawer
         nds = new NavDrawerSetup(this, mActivityTitle);
@@ -74,9 +81,23 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveUserTheme(String theme) {
-        SharedPreferences.Editor editor = userInfo.edit();
-        editor.putString(getResources().getString(R.string.user_theme), theme);
-        editor.commit();
+        //SharedPreferences.Editor editor = userInfo.edit();
+        //editor.putString(getResources().getString(R.string.user_theme), theme);
+        //editor.commit();
+        switch (theme) {
+            case "blue":
+                themeManager.saveTheme(ThemeManager.Theme.BLUE);
+                break;
+            case "suit":
+                themeManager.saveTheme(ThemeManager.Theme.SUIT);
+                break;
+            case "red":
+                themeManager.saveTheme(ThemeManager.Theme.RED);
+                break;
+            case "gray":
+                themeManager.saveTheme(ThemeManager.Theme.GRAY);
+                break;
+        }
     }
 
 
