@@ -57,7 +57,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void setTheme(View v) {
         // Get the tag for the button clicked
         String theme = v.getTag().toString();
-        System.out.println(theme);
 
         if (theme.equals("blue")) {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_blue, null));
@@ -65,9 +64,19 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_gray, null));
         } else if (theme.equals("red")) {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_red, null));
-        } else {
+        } else if (theme.equals("suit")) {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_suit, null));
+        } else {
+            return;
         }
+
+        saveUserTheme(theme);
+    }
+
+    public void saveUserTheme(String theme) {
+        SharedPreferences.Editor editor = userInfo.edit();
+        editor.putString(getResources().getString(R.string.user_theme), theme);
+        editor.commit();
     }
 
 

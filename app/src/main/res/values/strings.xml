@@ -21,4 +21,5 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="user_info_file">com.heybotler.botlerapp.USER_DETAILS</string>
+    <string name="user_theme">theme</string>
 </resources>
