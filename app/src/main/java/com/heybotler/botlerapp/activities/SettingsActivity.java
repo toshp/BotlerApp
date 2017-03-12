@@ -77,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Load the appropriate fragment to fill in settings page
     public void loadFragment(String screen) {
         if (screen.equals("theme")) {
             // Load the themes fragment
@@ -86,5 +87,10 @@ public class SettingsActivity extends AppCompatActivity {
             ft.add(R.id.fragment_area, theme_fragment, "SETTINGS_THEME");
             ft.commit();
         }
+    }
+
+    public void setTheme(View v) {
+        // Get the tag for the button clicked
+        
     }
 }
