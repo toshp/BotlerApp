@@ -1,17 +1,12 @@
 package com.heybotler.botlerapp.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,19 +14,16 @@ import android.widget.TextView;
 import com.heybotler.botlerapp.R;
 import com.heybotler.botlerapp.helpers.FontChanger;
 import com.heybotler.botlerapp.helpers.MessageAdapter;
+import com.heybotler.botlerapp.helpers.NavDrawerSetup;
 import com.heybotler.botlerapp.helpers.UserManagement;
 import com.heybotler.botlerapp.models.Message;
 
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
-    private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    private String mActivityTitle;
     private MessageAdapter messageAdapter;
     private SharedPreferences userInfo;
+    private NavDrawerSetup nds;
 
     /**
      * 1) Set app bar title
@@ -49,27 +41,12 @@ public class ChatActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(myToolbar);
 
-        mDrawerList = (ListView) findViewById(R.id.nav_list);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mActivityTitle = "Today's Messages";
-
-        View navHeader = LayoutInflater.from(this).inflate(R.layout.nav_heading, null);
-        TextView nav_name = (TextView) navHeader.findViewById(R.id.nav_name);
-        nav_name.setText(userInfo.getString("firstName", "No") + " " + userInfo.getString("lastName", "Name"));
-        FontChanger.changeFont(getAssets(), nav_name, "bold");
-        mDrawerList.addHeaderView(navHeader);
-        View navSignOut = LayoutInflater.from(this).inflate(R.layout.nav_sign_out, null);
-        mDrawerList.addFooterView(navSignOut);
-
-        addDrawerItems();
+        nds = new NavDrawerSetup(this, "Today's Messages");
+        nds.setupNavDrawer();
 
         getSupportActionBar().setTitle("Today's Messages");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        setupDrawer();
-
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         ListView messageList = (ListView) findViewById(R.id.chat_history);
         View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
@@ -120,75 +97,20 @@ public class ChatActivity extends AppCompatActivity {
                 messageText));
     }
 
-    private void addDrawerItems() {
-        String[] osArray = {"Today's Messages", "Themes", "Recent Bots"};
-        mAdapter = new ArrayAdapter<String>(this, R.layout.nav_opt_layout, R.id.nav_opt_text, osArray);
-        mDrawerList.setAdapter(mAdapter);
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu();
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
+    /**
+     * Overriding method to make menu icon clickable
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (nds.getToggle().onOptionsItemSelected(item)) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
-    /** Closes drawer, passes the selection to changeActivity */
-    private void selectItem(int position) {
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
-        changeActivity(position);
-    }
-
-    private void changeActivity(int position) {
-        if (position == 2) {
-            // Launch themes
-            Intent next = new Intent(this, SettingsActivity.class);
-            next.putExtra("screen", "theme");
-            startActivity(next);
-        } else if (position == 3) {
-            // Recent bots
-            Intent next = new Intent(this, SettingsActivity.class);
-            next.putExtra("screen", "history");
-            startActivity(next);
-        } else if (position == 4) {
-            // Sign out
-        }
-    }
 }

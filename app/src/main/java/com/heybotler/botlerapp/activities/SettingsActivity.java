@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.heybotler.botlerapp.R;
 import com.heybotler.botlerapp.fragments.ThemeFragment;
@@ -91,6 +92,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void setTheme(View v) {
         // Get the tag for the button clicked
-        
+        String theme = v.getTag().toString();
+        System.out.println(theme);
+
+        if (theme.equals("blue")) {
+            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_blue, null));
+        } else if (theme.equals("gray")) {
+            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_gray, null));
+        } else if (theme.equals("red")) {
+            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_red, null));
+        } else {
+            getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_suit, null));
+        }
     }
 }
