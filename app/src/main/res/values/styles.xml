@@ -12,6 +12,18 @@
         <item name="android:background">#444444</item>
     </style>
 
+    <style name="SettingRow">
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
 
+    <style name="ThemeButton">
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="ButtonLabel">
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/botlerLightGray</item>
+    </style>
 
 </resources>

@@ -16,7 +16,106 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16dp"
+        android:paddingBottom="20dp"
         android:textColor="@color/botlerGray"
         android:text="Select a color for the navigation bar."/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SettingRow">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeButton"
+                android:layout_weight="2"
+                android:background="@color/botlerBlue"
+                android:tag="blue"
+                android:onClick="setTheme"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Botler Blue"
+                android:gravity="right"
+                android:theme="@style/ButtonLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SettingRow">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeButton"
+                android:layout_weight="2"
+                android:background="@color/botlerMilitary"
+                android:tag="gray"
+                android:onClick="setTheme"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Military Gray"
+                android:gravity="right"
+                android:theme="@style/ButtonLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SettingRow">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeButton"
+                android:layout_weight="2"
+                android:background="@color/botlerDarkBlue"
+                android:tag="suit"
+                android:onClick="setTheme"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Suit &amp; Tie Blue"
+                android:gravity="right"
+                android:theme="@style/ButtonLabel"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SettingRow">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeButton"
+                android:layout_weight="2"
+                android:background="@color/botlerRed"
+                android:tag="red"
+                android:onClick="setTheme"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Botler Red"
+                android:gravity="right"
+                android:theme="@style/ButtonLabel"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

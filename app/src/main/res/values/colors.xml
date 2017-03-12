@@ -9,4 +9,6 @@
     <color name="botlerLightGray">#bbbbbb</color>
     <color name="botlerBlack">#222222</color>
     <color name="botlerRed">#D43326</color>
+    <color name="botlerDarkBlue">#3F5765</color>
+    <color name="botlerMilitary">#4F5D5E</color>
 </resources>
