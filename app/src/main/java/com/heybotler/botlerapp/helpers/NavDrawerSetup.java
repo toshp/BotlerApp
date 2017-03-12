@@ -29,10 +29,10 @@ public class NavDrawerSetup {
     private ActionBarDrawerToggle toggle;
 
     public NavDrawerSetup(AppCompatActivity activity, String title) {
+        this.activity = activity;
         userInfo = activity.getSharedPreferences(activity.getResources().getString(R.string.user_info_file), activity.MODE_PRIVATE);
         layout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         drawerList = (ListView) activity.findViewById(R.id.nav_list);
-        this.activity = activity;
         this.title = title;
     }
 

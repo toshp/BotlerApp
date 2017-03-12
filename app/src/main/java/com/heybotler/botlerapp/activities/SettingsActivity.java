@@ -3,29 +3,28 @@ package com.heybotler.botlerapp.activities;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
 
 import com.heybotler.botlerapp.R;
 import com.heybotler.botlerapp.fragments.ThemeFragment;
+import com.heybotler.botlerapp.helpers.NavDrawerSetup;
 
 public class SettingsActivity extends AppCompatActivity {
     private SharedPreferences userInfo;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle = "Theme Settings";
+    private NavDrawerSetup nds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        userInfo = getSharedPreferences(getResources().getString(R.string.user_info_file), MODE_PRIVATE);
         String screen = getIntent().getStringExtra("screen");
 
         // Find and set toolbar as activity action bar
@@ -37,45 +36,10 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         // Setup drawer
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        setupDrawer();
+        nds = new NavDrawerSetup(this, mActivityTitle);
+        nds.setupNavDrawer();
 
         loadFragment(screen);
-    }
-     // TODO make drawer setup a separate helper
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu();
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Activate the navigation drawer toggle
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     // Load the appropriate fragment to fill in settings page
@@ -104,5 +68,22 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.app_bar_suit, null));
         }
+    }
+
+
+    /**
+     * Overriding method to make menu icon clickable
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Activate the navigation drawer toggle
+        if (nds.getToggle().onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
