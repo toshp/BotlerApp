@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Setup theme manager
         themeManager = new ThemeManager(this);
-        currentTheme = themeManager.getCurrentTheme();
+        themeManager.setBarTheme(getSupportActionBar());
 
         // Setup drawer
         nds = new NavDrawerSetup(this, mActivityTitle);
@@ -80,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
         saveUserTheme(theme);
     }
 
-    public void saveUserTheme(String theme) {
+    private void saveUserTheme(String theme) {
         themeManager.saveTheme(ThemeManager.Theme.getThemeFromString(theme));
     }
 

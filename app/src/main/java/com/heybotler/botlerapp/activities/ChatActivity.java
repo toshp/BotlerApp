@@ -15,6 +15,7 @@ import com.heybotler.botlerapp.R;
 import com.heybotler.botlerapp.helpers.FontChanger;
 import com.heybotler.botlerapp.helpers.MessageAdapter;
 import com.heybotler.botlerapp.helpers.NavDrawerSetup;
+import com.heybotler.botlerapp.helpers.ThemeManager;
 import com.heybotler.botlerapp.helpers.UserManagement;
 import com.heybotler.botlerapp.models.Message;
 
@@ -24,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private SharedPreferences userInfo;
     private NavDrawerSetup nds;
+    private ThemeManager themeManager;
 
     /**
      * 1) Set app bar title
@@ -48,6 +50,9 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        // Setup theme manager
+        themeManager = new ThemeManager(this);
+
         ListView messageList = (ListView) findViewById(R.id.chat_history);
         View chatHeader = LayoutInflater.from(getApplicationContext()).inflate(R.layout.chat_heading, null);
 
@@ -64,6 +69,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         String userID = userInfo.getString(getResources().getString(R.string.user_id), "whoops");
+        // Set theme onResume in case changed
+        themeManager.setBarTheme(getSupportActionBar());
         // Get messages in ArrayList
         ArrayList<Message> messages = UserManagement.getUserMessages(userID);
         // Instantiate adapter
